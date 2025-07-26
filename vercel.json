@@ -1,14 +1,8 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "cuisineBotApp/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "cuisineBotApp/build"
-      }
-    }
-  ],
+  "buildCommand": "cd cuisineBotApp && npm run build",
+  "outputDirectory": "cuisineBotApp/build",
+  "installCommand": "cd cuisineBotApp && npm install",
   "routes": [
     {
       "src": "/static/(.*)",

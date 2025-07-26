@@ -25,8 +25,9 @@ const IngredientSearch = ({ onSearch }) => {
 
   const searchRecipes = (ingredients, searchTerm) => {
     let results = [...allRecipes];
-    // Only search by ingredients if there are 2 or more
-    if (ingredients && ingredients.length >= 2) {
+    
+    // Search by ingredients if provided
+    if (ingredients && ingredients.length > 0) {
       results = results.filter(recipe => {
         // Support Hebrew: check both recipe.ingredients and recipe.translations?.hebrew?.ingredients
         const allRecipeIngredients = [
@@ -39,10 +40,8 @@ const IngredientSearch = ({ onSearch }) => {
           )
         );
       });
-    } else if (ingredients && ingredients.length === 1) {
-      // If only one ingredient, don't show any recipes
-      results = [];
     }
+    
     // Search by recipe name or tags (if searchTerm is provided)
     if (searchTerm) {
       results = results.filter(recipe =>
@@ -50,12 +49,18 @@ const IngredientSearch = ({ onSearch }) => {
         recipe.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
       );
     }
+    
     return results;
   };
 
   const handleSearch = () => {
     const ingredientList = parseIngredients(ingredients);
+    console.log('Searching with ingredients:', ingredientList);
+    console.log('Search term:', searchTerm);
+    
     const searchResults = searchRecipes(ingredientList, searchTerm.trim());
+    console.log('Search results:', searchResults.length, 'recipes found');
+    
     if (onSearch) {
       onSearch(searchResults);
     }
@@ -99,7 +104,7 @@ const IngredientSearch = ({ onSearch }) => {
         <button 
           onClick={handleSearch}
           className="search-button"
-          disabled={(!ingredients && !searchTerm) || (parseIngredients(ingredients).length === 1)}
+          disabled={!ingredients && !searchTerm}
         >
           Search Recipes
         </button>

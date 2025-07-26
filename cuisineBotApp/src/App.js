@@ -12,6 +12,7 @@ function App() {
   const [filters, setFilters] = useState({ cuisines: [], diets: [] });
 
   const handleSearch = (searchData) => {
+    console.log('App: handleSearch called with:', searchData);
     setSearchResults(searchData);
   };
 

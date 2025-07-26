@@ -12,9 +12,13 @@ const RecipeList = ({ searchResults, filters }) => {
   useEffect(() => {
     setLoading(true);
     setError(null);
+    console.log('RecipeList: searchResults received:', searchResults);
+    console.log('RecipeList: filters received:', filters);
+    
     setTimeout(() => {
       try {
         let filteredRecipes = searchResults && searchResults.length > 0 ? [...searchResults] : [...allRecipes];
+        console.log('RecipeList: initial filteredRecipes count:', filteredRecipes.length);
 
         // Apply cuisine filter
         if (filters && filters.cuisines && filters.cuisines.length > 0) {
